@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.co.demo.mapper.user">
+ 	<!-- User All Data -->
+ 	<resultMap type="user" id="UserAllMap">
+ 		<id column="uidx" property="idx"/>
+ 		<result column="uemail" property="email"/>
+ 		<result column="upassword" property="password"/>
+ 		<result column="uname" property="name"/>
+ 		<result column="uphone" property="phone"/>
+ 		<result column="uaaddress1" property="address1"/>
+ 		<result column="uaddress2" property="address2"/>
+ 		<result column="ucreatedAt" property="createdAt"/>
+ 		<result column="uupdatedAt" property="updatedAt"/>
+ 		<collection resultMap="userRoleMapType" property="roles" />
+ 		<collection resultMap="userLoginTimeMapType" property="loginTimes" />
+ 		<!-- <association resultMap="userDetailMapType" property="detail" /> -->
+ 	</resultMap>
+ 	<!-- User Info Get -->
+ 	<resultMap type="user" id="UserInfoMap">
+ 		<id column="uidx" property="idx"/>
+ 	</resultMap>
+ 	
+ 	<!-- User Role Get -->
+ 	<resultMap type="userRole" id="userRoleMapType">
+ 		<id column="ridx" property="idx"/>
+ 		<result column="rrole" property="role"/>
+ 		<result column="rcreatedAt" property="createdAt"/>
+ 		<result column="rupdatedAt" property="updatedAt"/>
+ 	</resultMap>
+ 	
+ 	<!-- User Login Time Get -->
+ 	<resultMap type="LoginTime" id="userLoginTimeMapType">
+ 		<id column="lidx" property="idx"/>
+ 		<result column="llogin_time" property="loginTime"/>
+ 	</resultMap>
+ 	<!-- User Detail Get -->
+ 	<resultMap type="UserDetail" id="userDetailMapType">
+ 		<id column="didx" property="idx" />
+ 	</resultMap>
+ 	
+ 	<!-- UserVO Insert -->
+ 	<insert id="registeUser" parameterType="user" >
+ 		<![CDATA[
+ 			INSERT INTO user_tbl (
+ 				email, 
+ 				password, 
+ 				name, 
+ 				phone,
+ 				address1, 
+ 				address2 
+ 			) VALUES(
+ 				#{email},
+ 				#{password},
+ 				#{name},
+ 				#{phone},
+ 				#{address1},
+ 				#{address2}	
+ 			)
+ 		]]>
+ 	</insert>
+ 	
+ 	<!-- Role Insert Default -->
+ 	<insert id="InsertRoleDefault" parameterType="String">
+ 		<![CDATA[
+ 			INSERT INTO user_role_tbl (
+ 				user_tbl_email
+ 			) VALUES (
+ 				#{email}
+ 			)
+ 		]]>
+ 	</insert>
+ 	
+ 	<!-- Role Insert Default -->
+ 	<insert id="InsertRoleDefaultObj" parameterType="user">
+ 		<![CDATA[
+ 			INSERT INTO user_role_tbl (
+ 				user_tbl_email
+ 			) VALUES (
+ 				#{email}
+ 			)
+ 		]]>
+ 	</insert>
+ 	
+ 	<!-- Role Insert  -->
+ 	<insert id="InsertRole" parameterType="userRole">
+ 		<![CDATA[
+ 			INSERT INTO user_role_tbl (
+ 				user_tbl_email,
+ 				role
+ 			) VALUES (
+ 				#{user.email}
+ 				#{role}
+ 			)
+ 		]]>
+ 	</insert>
+ 	
+ 	<!-- User Login Time Insert Default -->
+	<insert id="InsertLoginTimeObj" parameterType="user">
+		<![CDATA[
+			INSERT INTO user_login_time_tbl(
+				user_tbl_email
+			)
+			VALUES(
+				#{email}
+			)
+		]]>
+	</insert>
+	 
+	 <!-- User Login Time Insert Default -->
+	<insert id="InsertLoginTime" parameterType="String">
+		<![CDATA[
+			INSERT INTO user_login_time_tbl(
+				user_tbl_email
+			)
+			VALUES(
+				#{email}
+			)
+		]]>
+	</insert>
+	
+	<!-- Find User -->
+	<select id="findUserByEmailUseEmail" parameterType="String" resultType="user">
+		<![CDATA[
+			SELECT * FROM user_tbl 
+			WHERE email=#{email} AND idx > 0
+		]]>
+	</select>
+	
+	<!-- Find User -->
+	<select id="findUserByObj" parameterType="user" resultType="user">
+		<![CDATA[
+			SELECT * FROM user_tbl as user
+		]]>
+		<include refid="userSearchObj"/>
+	</select>
+	<!-- Fiind User SQL -->
+	<sql id="userSearchObj">
+		WHERE 
+		<if test="email != null">
+			user.email=#{email} AND 
+		</if>
+		<if test="name != null">
+			user.name=#{name} AND 
+		</if>
+		<if test="phone != null">
+			user.phone=#{phone} AND 
+		</if>
+		<choose>
+			<when test="email != null"> 
+			</when>
+			<when test="name != null">
+			</when>
+			<when test="phone != null">
+			</when>
+			<otherwise>
+				user.idx=0 AND 
+			</otherwise>
+		</choose>
+		user.idx > 0
+	</sql>
+	
+	<!-- find UserVO and UserRoleVO -->
+	<select id="findUserByObjAndRole" parameterType="user" resultMap="UserAllMap">
+		<![CDATA[
+			SELECT 
+				user.email as uemail, 
+				user.name as uname, 
+				user.phone as uphone, 
+				user.address1 as uaddress1, 
+				user.address2 as uaddress2, 
+				user.createdAt as ucreatedAt, 
+				user.updatedAt as uupdatedAt,  
+				roles.role as rrole, 
+				roles.createdAt as rcreatedAt, 
+				roles.updatedAt as rupdatedAt 
+			FROM user_tbl as user 
+			LEFT JOIN 
+				user_role_tbl as roles 
+			ON 
+				user.email=roles.user_tbl_email  
+		]]>
+		<include refid="userSearchObj"/>
+	</select>
+	
+	<!-- find UserVO and UserRoleVO -->
+	<select id="findUserInfo" parameterType="user" resultMap="UserAllMap">
+		<![CDATA[
+			SELECT 
+				user.email as uemail, 
+				user.name as uname, 
+				user.phone as uphone, 
+				user.address1 as uaddress1, 
+				user.address2 as uaddress2, 
+				user.createdAt as ucreatedAt, 
+				user.updatedAt as uupdatedAt,  
+				roles.role as rrole, 
+				roles.createdAt as rcreatedAt, 
+				roles.updatedAt as rupdatedAt 
+			FROM user_tbl as user 
+			LEFT JOIN 
+				user_role_tbl as roles 
+			ON 
+				user.email=roles.user_tbl_email  
+		]]>
+		<include refid="userSearchObj"/>
+	</select>
+	
+	
+	<!-- find UserVO and UserRoleVO -->
+	<select id="findUserDetail" parameterType="String" resultMap="UserAllMap">
+		<![CDATA[
+			SELECT 
+				user.email as uemail, 
+				user.name as uname, 
+				user.phone as uphone, 
+				user.address1 as uaddress1, 
+				user.address2 as uaddress2, 
+				user.createdAt as ucreatedAt, 
+				user.updatedAt as uupdatedAt,  
+				roles.role as rrole, 
+				roles.createdAt as rcreatedAt, 
+				roles.updatedAt as rupdatedAt 
+			FROM user_tbl as user 
+			LEFT JOIN 
+				user_role_tbl as roles 
+			ON 
+				user.email=roles.user_tbl_email
+			WHERE user.email=#{email} AND user.idx > 0  
+		]]>
+		
+	</select>
+	
+	<!-- Login User -->
+	<select id="LoginUser" parameterType="user" resultType="user">
+		<![CDATA[
+			 SELECT 
+			 	user.email as uemail,
+			 	user.paassword as upassword,
+			 	roles.role as rrole 
+			 FROM 
+			 	user_tbl as user
+			 LEFT JOIN 
+			 	user_role_tbl as roles
+			 ON 
+			 	user.email=roles.user_tbl_email 
+			 WHERE 
+			 	user.email = #{email} 
+			 AND 
+			 	user.idx > 0
+		]]>
+	</select>
+	
+	<!-- User Login Time Get -->
+	<select id="GetUserLoginTimeList" parameterType="LoginTime" resultType="LoginTime">
+		<![CDATA[
+			SELECT * FROM user_login_time_tbl 
+			WHERE user_tbl_email=#{user.email}
+		]]>
+	</select>
+	 	
+</mapper>  
+
