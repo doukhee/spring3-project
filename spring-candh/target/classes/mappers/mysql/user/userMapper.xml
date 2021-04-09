@@ -17,6 +17,7 @@
  		<result column="uupdatedAt" property="updatedAt"/>
  		<collection resultMap="userRoleMapType" property="roles" />
  		<collection resultMap="userLoginTimeMapType" property="loginTimes" />
+ 		<!-- <collection resultMap="userDetailMapType" property="detail" /> -->
  		<!-- <association resultMap="userDetailMapType" property="detail" /> -->
  	</resultMap>
  	<!-- User Info Get -->
@@ -261,6 +262,7 @@
 			WHERE user_tbl_email=#{user.email}
 		]]>
 	</select>
+	
 	 	
 </mapper>  
 

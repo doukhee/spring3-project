@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.co.demo.mapper.admin.user">
+ 	
+ 	
+ 	<!-- counter User -->
+ 	<select id="countUserAll" resultType="int">
+ 		<![CDATA[
+ 			SELECT count(*) FROM user_tbl
+ 		]]>	
+ 	</select>
+ 	
+ 	<!-- Paging User -->
+ 	<select id="PagingUser" resultType="user">
+ 		SELECT * FROM user_tbl 
+ 		WHERE 
+ 		<include refid="searchUser" />
+ 		idx > 0 
+ 		LIMIT #{limit} OFFSET #{offset}
+ 	</select>
+ 	
+ 	<!-- Search User SQL -->
+ 	<sql id="searchUser">
+ 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+ 			<foreach collection="typeArr" item="type">
+ 				<trim prefix="OR">
+ 					<choose>
+ 						<when test="type == 'E'.toString()">
+ 							email LIKE CONCAT ('%', #{keyword}, '%')
+ 						</when>
+ 						<when test="type == 'P'.toString()">
+ 							phone LIKE CONCAT ('%', #{keyword}, '%')
+ 						</when>
+ 						<when test="type == 'N'.toString()">
+ 							name LIKE CONCAT ('%', #{keyword}, '%')
+ 						</when>
+ 					</choose>
+ 				</trim>
+ 			</foreach>
+ 		</trim>
+ 	</sql>
+ 	
+ 	<!-- Total User Number -->
+ 	<select id="getTotalCount" resultType="int">
+ 		SELECT count(*) FROM user_tbl 
+ 		WHERE 
+ 		<include refid="searchUser" />
+ 		idx > 0
+ 	</select>
+ 	
+ 	<!-- Update User All -->
+ 	<update id="updateUserAll" parameterType="user">
+		<![CDATA[
+			UPDATE user_tbl AS user 
+	 		SET user.name=#{name},
+ 			SET user.phone=#{phone}, 
+ 			SET user.address1=#{address1}, 
+	 		SET user.address2=#{address2},
+ 			SET user.updatedAt=now() 
+ 			WHERE 
+	 		user.email=#{email} AND idx > 0
+		]]>
+ 	</update>
+ 	
+</mapper>  
+

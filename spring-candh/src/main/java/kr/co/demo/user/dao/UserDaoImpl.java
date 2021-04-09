@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.demo.util.Criteria;
 import kr.co.demo.vo.UserLoginTimeVO;
 import kr.co.demo.vo.UserRoleVO;
 import kr.co.demo.vo.UserVO;
@@ -127,6 +128,18 @@ public class UserDaoImpl implements UserDao{
 	public UserVO userInfoAll(UserVO user) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<UserVO> getPaging(Criteria cri) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	
