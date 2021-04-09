@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	@Transactional
 	public boolean UpdateUser(UserVO user) {
 		// TODO Auto-generated method stub
 		return false;
@@ -43,13 +44,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean DeleteUser(UserVO user) {
 		// TODO Auto-generated method stub
-		return false;
+		return dao.UserDelete(user);
 	}
 
 	@Override
 	public UserVO InfoUser(UserVO user) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.UserInfo(user);
 	}
 
 	@Override

@@ -15,7 +15,7 @@
  		<result column="uaddress2" property="address2"/>
  		<result column="ucreatedAt" property="createdAt"/>
  		<result column="uupdatedAt" property="updatedAt"/>
- 		<collection resultMap="userRoleMapType" property="roles" />
+ 		<collection javaType="java.util.List" resultMap="userRoleMapType" property="roles" />
  		<collection resultMap="userLoginTimeMapType" property="loginTimes" />
  		<!-- <collection resultMap="userDetailMapType" property="detail" /> -->
  		<!-- <association resultMap="userDetailMapType" property="detail" /> -->
@@ -239,6 +239,37 @@
 		]]>
 		
 	</select>
+	
+		<!-- find UserVO and UserRoleVO -->
+	<select id="findUserDetailObj" parameterType="user" resultMap="UserAllMap">
+		<![CDATA[
+			SELECT 
+				user.email as uemail, 
+				user.name as uname, 
+				user.phone as uphone, 
+				user.address1 as uaddress1, 
+				user.address2 as uaddress2, 
+				user.createdAt as ucreatedAt, 
+				user.updatedAt as uupdatedAt,  
+				roles.role as rrole, 
+				roles.createdAt as rcreatedAt, 
+				roles.updatedAt as rupdatedAt,
+				login.login_time as llogin_time 
+			FROM user_tbl as user 
+			LEFT JOIN 
+				user_role_tbl as roles 
+			ON 
+				user.email=roles.user_tbl_email 
+			LEFT JOIN 
+				user_login_time_tbl as login 
+			ON 
+				user.email=login.user_tbl_email 
+			WHERE user.email=#{email} AND user.idx > 0  
+			
+		]]>
+		
+	</select>
+	
 	
 	<!-- Login User -->
 	<select id="LoginUser" parameterType="user" resultType="user">

@@ -62,7 +62,18 @@ public class UserDaoImpl implements UserDao{
 	public UserVO UserInfo(String user) {
 		// TODO Auto-generated method stub
 		return session.selectOne("findUserDetail", user);
+
+		
 	}
+	
+	@Override
+	public UserVO UserInfo(UserVO user) {
+		// TODO Auto-generated method stub
+		return session.selectOne("findUserDetailObj", user);
+		
+	}
+	
+	
 	
 	@Override
 	public boolean UpdateUser(UserVO user) {

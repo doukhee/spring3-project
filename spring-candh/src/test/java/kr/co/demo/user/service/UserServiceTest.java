@@ -50,4 +50,19 @@ public class UserServiceTest {
 		
 	}
 
+	
+	@Test
+	public void UserInfoTest() {
+		System.out.println("User Info Service Test");
+		UserVO user = new UserVO();
+		user.setEmail("test@co.kr");
+		user = service.InfoUser(user);
+		
+		if(user != null) {
+			System.out.println(user.toString());
+			user.getRoles().forEach(role->{
+				System.out.println(role.toString());
+			});
+		}
+	}
 }

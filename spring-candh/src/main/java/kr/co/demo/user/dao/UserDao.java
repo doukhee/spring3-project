@@ -64,6 +64,8 @@ public interface UserDao {
 	 * @return UserVO add UserRoleVO, UserDetailVO, UserLoginTimeVO
 	 */
 	public UserVO UserInfo(String user);
+	public UserVO UserInfo(UserVO user);
+	
 	/**
 	 * Update User Using email and idx
 	 * @param user

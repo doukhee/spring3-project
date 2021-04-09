@@ -95,6 +95,9 @@ public class UserDaoTest {
 		UserVO user = dao.UserInfo(email);
 		if(user != null) {
 			System.out.println(user.toString());
+			user.getRoles().forEach(items->{
+				System.out.println(items.toString());
+			});
 		}else {
 			System.out.println("User is null");
 		}

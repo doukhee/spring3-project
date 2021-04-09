@@ -86,7 +86,7 @@ public class UserDaoAdminImpl implements UserDao{
 	@Override
 	public boolean InsertUserRole(UserRoleVO role) {
 		// TODO Auto-generated method stub
-		return false;
+		return session.insert("userRoleInsertAdmin", role) == 1;
 	}
 
 	@Override
@@ -141,6 +141,12 @@ public class UserDaoAdminImpl implements UserDao{
 	public int getTotalCount(Criteria cri) {
 		// TODO Auto-generated method stub
 		return session.selectOne("getTotalCount");
+	}
+
+	@Override
+	public UserVO UserInfo(UserVO user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

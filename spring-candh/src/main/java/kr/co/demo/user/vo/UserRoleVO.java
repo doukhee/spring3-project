@@ -26,6 +26,10 @@ public class UserRoleVO {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	public void setRole(UserRoleEnum role) {
+		this.role = role.getRoleName();
+	}
 
 	public Date getCreatedAt() {
 		return createdAt;

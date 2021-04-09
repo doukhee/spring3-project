@@ -5,6 +5,18 @@
   
 <mapper namespace="kr.co.demo.mapper.admin.user">
  	
+ 	<!-- User Role Add -->
+ 	<insert id="userRoleInsertAdmin" parameterType="userRole">
+ 		<![CDATA[
+ 			INSERT INTO user_role_tbl (
+ 				user_tbl_email,
+ 				role
+ 			) VALUES (
+ 				#{user.email},
+ 				#{role}
+ 			)
+ 		]]>
+ 	</insert>
  	
  	<!-- counter User -->
  	<select id="countUserAll" resultType="int">
