@@ -15,7 +15,7 @@
  		<result column="uaddress2" property="address2"/>
  		<result column="ucreatedAt" property="createdAt"/>
  		<result column="uupdatedAt" property="updatedAt"/>
- 		<collection javaType="java.util.List" resultMap="userRoleMapType" property="roles" />
+ 		<collection javaType="java.util.List" ofType="userRole" resultMap="userRoleMapType" property="roles" />
  		<collection resultMap="userLoginTimeMapType" property="loginTimes" />
  		<!-- <collection resultMap="userDetailMapType" property="detail" /> -->
  		<!-- <association resultMap="userDetailMapType" property="detail" /> -->
