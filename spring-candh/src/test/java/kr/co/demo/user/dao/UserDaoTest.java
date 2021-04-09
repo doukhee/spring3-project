@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.demo.vo.UserVO;
+import kr.co.demo.user.vo.UserVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
@@ -72,7 +72,7 @@ public class UserDaoTest {
 	
 	@Test
 	public void FindUserAndRoleTest() {
-		System.out.println("User Find And Role");
+		System.out.println("User Find And Role Test");
 		UserVO user = new UserVO();
 		user.setEmail("test@co.kr");
 		user = dao.findByUserAndRole(user);
@@ -82,6 +82,19 @@ public class UserDaoTest {
 			user.getRoles().forEach(items->{
 				System.out.println(items.toString());
 			});
+		}else {
+			System.out.println("User is null");
+		}
+	}
+	
+	@Test
+	public void UserInfoTest() {
+		System.out.println("User Info Get By String email Test");
+		
+		String email = "test@co.kr";
+		UserVO user = dao.UserInfo(email);
+		if(user != null) {
+			System.out.println(user.toString());
 		}else {
 			System.out.println("User is null");
 		}

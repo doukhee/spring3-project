@@ -36,7 +36,7 @@
  	<!-- User Login Time Get -->
  	<resultMap type="LoginTime" id="userLoginTimeMapType">
  		<id column="lidx" property="idx"/>
- 		<result column="llogin_time" property="loginTime"/>
+ 		<result column="llogin_time" property="login_time"/>
  	</resultMap>
  	<!-- User Detail Get -->
  	<resultMap type="UserDetail" id="userDetailMapType">
@@ -224,12 +224,17 @@
 				user.updatedAt as uupdatedAt,  
 				roles.role as rrole, 
 				roles.createdAt as rcreatedAt, 
-				roles.updatedAt as rupdatedAt 
+				roles.updatedAt as rupdatedAt,
+				login.login_time as llogin_time 
 			FROM user_tbl as user 
 			LEFT JOIN 
 				user_role_tbl as roles 
 			ON 
-				user.email=roles.user_tbl_email
+				user.email=roles.user_tbl_email 
+			LEFT JOIN 
+				user_login_time_tbl as login 
+			ON 
+				user.email=login.user_tbl_email 
 			WHERE user.email=#{email} AND user.idx > 0  
 		]]>
 		
@@ -263,6 +268,36 @@
 		]]>
 	</select>
 	
+	<!-- Delete User -->
+	<delete id="userDeleteByUserVO" parameterType="user">
+		<![CDATA[
+			DELETE user_tbl 
+			WHERE email=#{email} AND idx > 0
+		]]>
+	</delete>
+	
+	<!-- Update User -->
+	<update id="userUpdateByUserVO" parameterType="user">
+		UPDATE user_tbl 
+		<if test="name != null">
+			SET name=#{name},
+		</if>
+		<if test="phone!= null">
+			SET phone=#{phone},
+		</if>
+		<if test="password != null">
+			SET password=#{password},
+		</if>
+		<if test="address1 != null">
+			SET address1=#{address1},
+		</if>
+		<if test="address2 != null">
+			SET address2=#{address2},
+		</if>
+		SET updatedAt=now() 
+		WHERE 
+		email=#{email} AND idx=#{idx} AND idx > 0
+	</update>
 	 	
 </mapper>  
 

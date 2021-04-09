@@ -11,8 +11,8 @@ import kr.co.demo.user.vo.UserRoleVO;
 import kr.co.demo.user.vo.UserVO;
 import kr.co.demo.util.Criteria;
 
-@Repository(value = "userDao")
-public class UserDaoImpl implements UserDao{
+@Repository(value = "userDaoAdmin")
+public class UserDaoAdminImpl implements UserDao{
 
 	@Autowired
 	private SqlSession session;
@@ -44,48 +44,41 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public UserVO findByUserVO(UserVO user) {
 		// TODO Auto-generated method stub
-		return session.selectOne("findUserByObj", user);
+		return null;
 	}
-	
+
 	@Override
 	public UserVO findByUserEmail(String email) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UserVO findByUserAndRole(UserVO user) {
 		// TODO Auto-generated method stub
-		return session.selectOne("findUserByObjAndRole", user);
+		return null;
 	}
-	
+
 	@Override
 	public UserVO UserInfo(String user) {
 		// TODO Auto-generated method stub
-		return session.selectOne("findUserDetail", user);
+		return null;
 	}
-	
+
 	@Override
 	public boolean UpdateUser(UserVO user) {
 		// TODO Auto-generated method stub
-		return session.update("userUpdateByUserVO", user) == 1;
+		return false;
 	}
 
 	@Override
 	public boolean UserDelete(UserVO user) {
 		// TODO Auto-generated method stub
-		return session.delete("userDeleteByUserVO", user) == 1;
+		return false;
 	}
-
 
 	@Override
 	public boolean InsertLoginTime(UserVO user) {
-		// TODO Auto-generated method stub
-		return session.insert("InsertLoginTimeObj", user) == 1;
-	}
-
-	
-	@Override
-	public boolean UpdateUserAll(UserVO user) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -95,7 +88,13 @@ public class UserDaoImpl implements UserDao{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
+	@Override
+	public boolean UpdateUserAll(UserVO user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	@Override
 	public boolean UpdateUserRole(UserRoleVO role) {
 		// TODO Auto-generated method stub
@@ -104,6 +103,12 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public List<UserLoginTimeVO> getLoginTimesbyUserVO(UserVO user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserVO userInfoAll(UserVO user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -127,21 +132,15 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public UserVO userInfoAll(UserVO user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<UserVO> getPaging(Criteria cri) {
 		// TODO Auto-generated method stub
-		return null;
+		return session.selectList("PagingUser", cri);
 	}
 
 	@Override
 	public int getTotalCount(Criteria cri) {
 		// TODO Auto-generated method stub
-		return 0;
+		return session.selectOne("getTotalCount");
 	}
 	
 	

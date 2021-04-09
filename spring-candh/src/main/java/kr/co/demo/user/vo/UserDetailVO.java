@@ -1,4 +1,4 @@
-package kr.co.demo.vo;
+package kr.co.demo.user.vo;
 
 
 public class UserDetailVO {

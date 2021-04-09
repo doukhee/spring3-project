@@ -4,10 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="kr.co.demo.vo.UserVO" alias="user"/>
-		<typeAlias type="kr.co.demo.vo.UserRoleVO" alias="userRole"/>
-		<typeAlias type="kr.co.demo.vo.UserLoginTimeVO" alias="LoginTime"/>
-		<typeAlias type="kr.co.demo.vo.UserDetailVO" alias="UserDetail"/>
+		<typeAlias type="kr.co.demo.user.vo.UserVO" alias="user"/>
+		<typeAlias type="kr.co.demo.user.vo.UserRoleVO" alias="userRole"/>
+		<typeAlias type="kr.co.demo.user.vo.UserLoginTimeVO" alias="LoginTime"/>
+		<typeAlias type="kr.co.demo.user.vo.UserDetailVO" alias="UserDetail"/>
+		
 	</typeAliases>
 	
 </configuration>
