@@ -1,6 +1,7 @@
 package kr.co.demo.user.vo;
 
-import java.sql.Date;
+
+import java.sql.Timestamp;
 import java.util.List;
 
 public class UserVO {
@@ -11,8 +12,8 @@ public class UserVO {
 	private String phone;
 	private String address1;
 	private String address2;
-	private Date createdAt;
-	private Date updatedAt;
+	private Timestamp createdAt;
+	private Timestamp updatedAt;
 	
 	/** relationship User */
 	private List<UserRoleVO> roles;
@@ -61,16 +62,16 @@ public class UserVO {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-	public Date getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
-	public Date getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	public List<UserRoleVO> getRoles() {

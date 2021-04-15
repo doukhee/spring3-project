@@ -1,10 +1,10 @@
 package kr.co.demo.user.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class UserLoginTimeVO {
 	private Long idx;
-	private Date loginTime;
+	private Timestamp login_time;
 	
 	/** Relationship User */
 	private UserVO user;
@@ -17,12 +17,12 @@ public class UserLoginTimeVO {
 		this.idx = idx;
 	}
 
-	public Date getLoginTime() {
-		return loginTime;
+	public Timestamp getLoginTime() {
+		return login_time;
 	}
 
-	public void setLoginTime(Date loginTime) {
-		this.loginTime = loginTime;
+	public void setLoginTime(Timestamp loginTime) {
+		this.login_time = loginTime;
 	}
 
 	public UserVO getUser() {
@@ -35,7 +35,7 @@ public class UserLoginTimeVO {
 
 	@Override
 	public String toString() {
-		return "UserLoginTimeVO [idx=" + idx + ", loginTime=" + loginTime + ", user=" + user + "]";
+		return "UserLoginTimeVO [idx=" + idx + ", loginTime=" + login_time + ", user=" + user + "]";
 	}
 	
 	

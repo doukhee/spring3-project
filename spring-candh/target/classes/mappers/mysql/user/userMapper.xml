@@ -15,8 +15,8 @@
  		<result column="uaddress2" property="address2"/>
  		<result column="ucreatedAt" property="createdAt"/>
  		<result column="uupdatedAt" property="updatedAt"/>
- 		<collection javaType="java.util.List" ofType="userRole" resultMap="userRoleMapType" property="roles" />
- 		<collection resultMap="userLoginTimeMapType" property="loginTimes" />
+ 		<collection property="roles" resultMap="userRoleMapType" javaType="java.util.ArrayList" ofType="userRole" />
+ 		<collection property="loginTimes" resultMap="userLoginTimeMapType" />
  		<!-- <collection resultMap="userDetailMapType" property="detail" /> -->
  		<!-- <association resultMap="userDetailMapType" property="detail" /> -->
  	</resultMap>
@@ -175,12 +175,12 @@
 				user.address2 as uaddress2, 
 				user.createdAt as ucreatedAt, 
 				user.updatedAt as uupdatedAt,  
-				roles.role as rrole, 
-				roles.createdAt as rcreatedAt, 
-				roles.updatedAt as rupdatedAt 
+				rolest.role as rrole, 
+				rolest.createdAt as rcreatedAt, 
+				rolest.updatedAt as rupdatedAt 
 			FROM user_tbl as user 
 			LEFT JOIN 
-				user_role_tbl as roles 
+				user_role_tbl as rolest 
 			ON 
 				user.email=roles.user_tbl_email  
 		]]>
@@ -215,27 +215,29 @@
 	<select id="findUserDetail" parameterType="String" resultMap="UserAllMap">
 		<![CDATA[
 			SELECT 
+				user.idx as uidx, 
 				user.email as uemail, 
 				user.name as uname, 
 				user.phone as uphone, 
 				user.address1 as uaddress1, 
 				user.address2 as uaddress2, 
 				user.createdAt as ucreatedAt, 
-				user.updatedAt as uupdatedAt,  
+				user.updatedAt as uupdatedAt, 
+				roles.idx as ridx, 
 				roles.role as rrole, 
 				roles.createdAt as rcreatedAt, 
 				roles.updatedAt as rupdatedAt,
-				login.login_time as llogin_time 
+				logins.login_time as llogin_time 
 			FROM user_tbl as user 
-			LEFT JOIN 
+			LEFT OUTER JOIN 
 				user_role_tbl as roles 
 			ON 
 				user.email=roles.user_tbl_email 
-			LEFT JOIN 
-				user_login_time_tbl as login 
+			LEFT OUTER JOIN 
+				user_login_time_tbl as logins 
 			ON 
-				user.email=login.user_tbl_email 
-			WHERE user.email=#{email} AND user.idx > 0  
+				user.email=logins.user_tbl_email 
+			WHERE user.email=#{email} AND user.idx > 0 
 		]]>
 		
 	</select>
