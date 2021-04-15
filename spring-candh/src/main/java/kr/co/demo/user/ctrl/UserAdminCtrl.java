@@ -12,12 +12,12 @@ public class UserAdminCtrl {
 
 	@GetMapping(value= {"","/"})
 	public String MainPage() {
-		return "";
+		return "redirect:/admin/user/list";
 	}
 	
 	@GetMapping(value="/list")
 	public String ListPage() {
-		return "";
+		return "admin/user/listPage";
 	}
 	
 	@GetMapping(value="/detail")
