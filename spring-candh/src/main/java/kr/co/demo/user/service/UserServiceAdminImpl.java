@@ -66,7 +66,7 @@ public class UserServiceAdminImpl implements UserService{
 	@Override
 	public List<UserVO> pagingUser(Criteria cri) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getPaging(cri);
 	}
 
 	@Override
